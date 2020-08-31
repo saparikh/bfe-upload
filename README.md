@@ -28,7 +28,7 @@ See [action.yml](action.yml)
       id: prepare_snapshot
 
     - name: Upload new snapshot to Batfish Enterprise server
-      uses: saparikh/bfe-upload@v1.5
+      uses: saparikh/bfe-upload@v1.0
       with:
         server_name: demo.intentionet.com
         server_ip: ${{ secrets.BFE_SERVER_IP }}
