@@ -1,0 +1,11 @@
+pybfe
+pytest
+pytest-html
+netaddr
+PyYAML
+jupyter
+attrdict
+jinja2
+python-dotenv
+argparse
+certifi

@@ -1,0 +1,46 @@
+name: Batfish Enterprise Snapshot upload
+description: This action will upload a network snapshot to your Batfish Enterprise server
+
+author: Samir Parikh
+
+branding:
+  color: green
+  icon: activity
+
+inputs:
+  server_name:
+    required: true
+    description: Hostname of the server running Batfish Enterprise
+  server_ip:
+    required: false
+    description: IP address of the server running Batfish Enterprise
+  server_port:
+    required: false
+    description: TCP port on which Batfish Enterprise service is listening
+    default: 443
+  snapshot_folder:
+    required: true
+    description: Directory where the new network snapshot is stored
+  network_name:
+    required: true
+    description: Name of the network used by Batfish Enterprise
+  snapshot_name:
+    required: true
+    description: Name of the snapshot to be created.
+  init_snapshot:
+    required: false
+    description: Boolean telling the Batfish Enterprise server to initialize (or not) a new snapshot
+    default: yes
+  ssl_certificate:
+    required: yes
+    description: base64 SSL certificate installed on Batfish Enterprise server. Run `base64 -i yourCA.pem`. Copy the output of into the Github secret `BFE_SSL_CERTIFICATE` of your repository
+
+outputs:
+  status:
+    description: Status of the snapshot upload
+  url:
+    description: URL to access newly created snapshot in Batfish Enterprise dashboard
+
+runs:
+  using: docker
+  image: Dockerfile

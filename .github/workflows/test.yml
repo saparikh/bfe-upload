@@ -1,0 +1,44 @@
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+
+    - name: Checkout this repo
+      uses: actions/checkout@v2
+      with:
+        path: main #to reference files from this repo, the filepath to use will be $GITHUB_WORKSPACE/main
+
+    # Ensure your snapshot directory is organized in the way described at
+    # https://batfish.readthedocs.io/en/latest/notebooks/interacting.html#Packaging-snapshot-data
+    - name: Create snapshot directory required for Batfish
+      run: |
+        mkdir -p $GITHUB_WORKSPACE/tmp/configs
+        mkdir -p $GITHUB_WORKSPACE/tmp/batfish
+        cp $GITHUB_WORKSPACE/main/test-snapshot/configs/*.cfg $GITHUB_WORKSPACE/tmp/configs/
+        cp $GITHUB_WORKSPACE/main/test-snapshot/configs/batfish/* $GITHUB_WORKSPACE/tmp/batfish/
+        echo "::set-output name=snapshot_dir::$GITHUB_WORKSPACE/tmp/"
+      id: prepare_snapshot
+
+    - name: Upload new snapshot to Batfish Enterprise server
+      uses: saparikh/bfe-upload@master
+      with:
+        server_name: demo.intentionet.com
+        server_ip: ${{ secrets.BFE_SERVER_IP }}
+        snapshot_folder: ${{ steps.prepare_snapshot.outputs.snapshot_dir }}
+        network_name: TEST
+        snapshot_name: ${{ github.sha }}
+        ssl_certificate: ${{ secrets.BFE_SSL_CERTIFICATE }}
+      id: upload_snapshot
+
+    - name: Retrieve outputs from BFE upload action
+      run: |
+        echo ${{ steps.upload_snapshot.outputs.status }}
+        echo ${{ steps.upload_snapshot.outputs.url }}
+
+
