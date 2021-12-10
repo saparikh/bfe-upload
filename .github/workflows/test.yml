@@ -34,6 +34,7 @@ jobs:
         network_name: TEST
         snapshot_name: ${{ github.sha }}
         ssl_certificate: ${{ secrets.BFE_SSL_CERTIFICATE }}
+        access_token: ${{ secretes.BFE_ACCESS_TOKEN }}
       id: upload_snapshot
 
     - name: Retrieve outputs from BFE upload action
