@@ -19,6 +19,7 @@ pd.set_option("display.max_columns", 20)
 NETWORK = os.environ.get("INPUT_NETWORK_NAME")
 BF_HOST = os.environ.get("INPUT_SERVER_NAME")
 BF_PORT = os.environ.get("INPUT_SERVER_PORT")
+BF_ACCESS_TOKEN = os.environ.get("INPUT_ACCESS_TOKEN")
 BF_SNAPSHOT_DIR = os.environ.get("INPUT_SNAPSHOT_FOLDER")
 
 BF_SNAPSHOT = os.environ.get("INPUT_SNAPSHOT_NAME")
@@ -31,7 +32,7 @@ if BF_SNAPSHOT == "error":
 
 BF_INIT_SNAPSHOT = os.environ.get("INPUT_INIT_SNAPSHOT", "yes")
 
-bf = Session.get('bfe', host=BF_HOST, ssl=True, port=BF_PORT)
+bf = Session(host=BF_HOST, port=BF_PORT, access_token=BF_ACCESS_TOKEN)
 bf.set_network(NETWORK)
 
 ss_list = bf.list_snapshots()
