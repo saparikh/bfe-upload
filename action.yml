@@ -34,6 +34,9 @@ inputs:
   ssl_certificate:
     required: yes
     description: base64 SSL certificate installed on Batfish Enterprise server. Run `base64 -i yourCA.pem`. Copy the output of into the Github secret `BFE_SSL_CERTIFICATE` of your repository
+  access_token:
+    required: yes
+    description: Access token for your Batfish Enterprise server. Recommend that you store this as a repository secret `BFE_ACCESS_TOKEN`
 
 outputs:
   status:
