@@ -1,6 +1,6 @@
 # required imports and default settings
 import pandas as pd
-from pybfe.client.session import GRPCSession as Session
+from pybfe.client.session import Session
 import os
 
 try:
